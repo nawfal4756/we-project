@@ -22,7 +22,8 @@
             try {
                 $result = $conn->query($sql);
                 if (mysqli_num_rows($result) > 0) {
-                    $_SESSION['email'] = $email;
+                    $row = mysqli_fetch_assoc($result);
+                    $_SESSION['id'] = $row['id'];
                     $_SESSION['start'] = time();
                     $_SESSION['type'] = "users";
                     if ($rememberMe) {

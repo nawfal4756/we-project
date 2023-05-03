@@ -1,6 +1,6 @@
 <?php
     require "users/navbar.php";
-    if (isset($_SESSION['email'])) {
+    if (isset($_SESSION['id'])) {
         header("Location: index.php");
     }
 ?>

@@ -3,7 +3,7 @@
         session_start();
     }
 
-    if (isset($_SESSION['email']) && isset($_SESSION['type'])) {
+    if (isset($_SESSION['id']) && isset($_SESSION['type'])) {
         if ($_SESSION['end'] < time()) {
             session_unset();
             session_destroy();
