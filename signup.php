@@ -1,5 +1,5 @@
 <?php 
-    require "users/navbar.php";
+    
     if (isset($_SESSION['email'])) {
         header("Location: index.php");
     }
@@ -20,9 +20,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
 </head>
 </head>
-<body>
-    <div class="vh-100 bg-secondary">
-        <div class="d-flex justify-content-center align-items-center h-100">
+<body class="bg-secondary">
+    <?php require "users/navbar.php"; ?>
+    <div class="vh-100">
+        <div class="d-flex justify-content-center align-items-center h-100 mt-5">
             <div class="card w-25">
                 <div class="card-body">
                     <?php include "Components/alert.php" ?>
@@ -83,7 +84,7 @@
                     let passwordHash = CryptoJS.MD5(formData.get("password")).toString();
                     formData.set("password", passwordHash);
                     $.ajax({
-                        url: "/we-project/api/users/signup.php",
+                        url: "/api/users/signup.php",
                         type: "POST",
                         data: formData,
                         processData: false,

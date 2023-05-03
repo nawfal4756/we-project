@@ -31,7 +31,7 @@
                     else {
                         $_SESSION['end'] = $_SESSION['start'] + (86400);
                     }
-                    echo json_encode(array("statusCode" => 200, "data" => "Login Successful", "array" => array($email, $password)));
+                    echo json_encode(array("statusCode" => 200, "data" => "Login Successful"));
                 }
                 else {
                     echo json_encode(array("statusCode" => 401, "data" => "Invalid Credentials"));

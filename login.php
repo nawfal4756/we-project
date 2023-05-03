@@ -36,7 +36,7 @@
                         ?>
                         <div class="mb-3">
                             <a href="signup.php">Don't have an account? Click Here</a> <br>
-                            <a href="/we-project/employer/">Are you an employer? Click Here</a>
+                            <a href="/employer/">Are you an employer? Click Here</a>
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary w-100 text-white">Login</button>
@@ -67,7 +67,7 @@
                     let passwordHash = CryptoJS.MD5(formData.get("password")).toString();
                     formData.set("password", passwordHash);
                     $.ajax({
-                        url: "/we-project/api/users/login.php",
+                        url: "/api/users/login.php",
                         type: "POST",
                         data: formData,
                         processData: false,

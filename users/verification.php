@@ -7,14 +7,14 @@
         if ($_SESSION['end'] < time()) {
             session_unset();
             session_destroy();
-            header("Location: /we-project/login.php");
+            header("Location: /login.php");
         }
 
         if ($_SESSION['type'] != "users") {
-            header("Location: /we-project/login.php");
+            header("Location: /login.php");
         }
     }
     else {
-        header("Location: /we-project/login.php");
+        header("Location: /login.php");
     }
 ?>
