@@ -1,5 +1,8 @@
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    
     setcookie("page", "users", time() + (86400 * 30), "/");
 ?>
 

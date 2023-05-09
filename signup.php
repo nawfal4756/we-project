@@ -1,5 +1,8 @@
 <?php 
-    
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
     if (isset($_SESSION['id'])) {
         header("Location: index.php");
     }
@@ -21,9 +24,9 @@
 </head>
 </head>
 <body class="bg-secondary">
-    <?php require "users/navbar.php"; ?>
-    <div class="vh-100">
-        <div class="d-flex justify-content-center align-items-center h-100 mt-5">
+    <div>
+        <?php require "users/navbar.php"; ?>
+        <div class="d-flex justify-content-center align-items-center mt-5">
             <div class="card w-25">
                 <div class="card-body">
                     <?php include "Components/alert.php" ?>
@@ -31,7 +34,7 @@
                     <hr>
                     <form id="signupForm" class="needs-validation p-3" novalidate action="#" method="post">
                         <?php 
-                            require "Components/Inputs/inputs.php";
+                            require "Components/inputs.php";
                             inputField("name", "text", "Name");
                             inputField("email", "email", "Email Address");
                             inputField("phone", "text", "Phone Number");

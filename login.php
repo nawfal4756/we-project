@@ -29,7 +29,7 @@
                     <hr>
                     <form id="loginForm" class="needs-validation p-3" novalidate action="#" method="post">
                         <?php 
-                            include "Components/Inputs/inputs.php";
+                            include "Components/inputs.php";
                             inputField("email", "email", "Email Address");
                             inputField("password", "password", "Password");
                             checkBoxField("rememberMe", "rememberMe", "Remember Me", false);
