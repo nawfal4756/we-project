@@ -1,6 +1,6 @@
 <?php 
     require "users/navbar.php";
-    // require "users/verification.php";
+    require "users/verification.php";
 
     require "Components/inputs.php";
 ?>
@@ -68,15 +68,15 @@
                 <form id="form3" action="#" method="post" class="needs-validation" novalidate>
                     <div id="degreeFields">
                         <?php 
-                            selectField("degree", "Degree", array('Bachelors', 'Masters', 'PhD'));
-                            inputField("field", "text", "Field");
-                            inputField("instituteName", "text", "Institute Name");
-                            inputField("cgpa", "text", "CGPA");
-                            dateField("ending", "Graduation Year");
+                            selectField("degree[]", "Degree", array((object)['id'=>1, 'name'=>'Bachelors'], (object)['id'=>2, 'name'=>'Masters'], (object)['id'=>3, 'name'=>'PhD']));
+                            inputField("field[]", "text", "Field");
+                            inputField("instituteName[]", "text", "Institute Name");
+                            inputField("cgpa[]", "text", "CGPA");
+                            dateField("ending[]", "Graduation Year");
                         ?>
                     </div>
                     <div class="mb-3">
-                        <button class="btn btn-primary" id="addDegree"><i class="bi bi-plus"></i> Add</button>
+                        <button class="btn btn-primary" type="button" id="addDegree"><i class="bi bi-plus"></i> Add</button>
                     </div>
                     <div class="mb-3 d-flex justify-content-between">
                         <button class="btn btn-primary" type="button" id="part3Back"><i class="bi bi-arrow-left"></i> Back</button>
@@ -89,7 +89,7 @@
             <div class="col-sm-12">
                 <form id="form4" action="#" method="post" class="needs-validation" novalidate>
                     <?php 
-                        fancySelect("skills", "Skills", array('PHP', 'Java'))
+                        fancySelect("skills[]", "Skills", array((object)['id'=> 1, 'name'=>'PHP'], (object)['id'=> 2, 'name'=>'JavaScript']))
                     ?>
                     
                     <div class="mb-3 d-flex justify-content-between">
@@ -156,17 +156,17 @@
                         <hr>
                         <button class="btn btn-danger degreeRemove" id="removeDegree"><i class="bi bi-trash"></i> Remove</button>
                         <?php 
-                        selectField("degree", "Degree", array('Bachelors', 'Masters', 'PhD'));
-                        inputField("field", "text", "Field");
-                        inputField("instituteName", "text", "Institute Name");
-                        inputField("cgpa", "text", "CGPA");
-                        dateField("ending", "Graduation Year");
+                        selectField("degree[]", "Degree", array((object)['id'=>1, 'name'=>'Bachelors'], (object)['id'=>2, 'name'=>'Masters'], (object)['id'=>3, 'name'=>'PhD']));
+                        inputField("field[]", "text", "Field");
+                        inputField("instituteName[]", "text", "Institute Name");
+                        inputField("cgpa[]", "text", "CGPA");
+                        dateField("ending[]", "Graduation Year");
                         ?>
                     </div>
                 `);
             })
 
-            $(".degreeRemove").click(function() {
+            $(document).on("click", ".degreeRemove", function() {
                 $(this).parent().remove();
             })
 
@@ -196,48 +196,53 @@
                         form = 4;
                     }
 
-                    if (form == 1) {
-                        part1Next();
-                    }
-                    else if (form == 2) {
-                        part2Next();
-                    }
-                    else if (form == 3) {
-                        part3Next();
-                    }
-                    else if (form == 4) {
-                        alert("done");
-                    }
+                    // for debugging
+                    // if (form == 1) {
+                    //     part1Next();
+                    // }
+                    // else if (form == 2) {
+                    //     part2Next();
+                    // }
+                    // else if (form == 3) {
+                    //     part3Next();
+                    // }
+                    // else if (form == 4) {
+                    //     alert("done");
+                    // }
 
-                    // $.ajax({
-                    //     url: "/api/users/information.php",
-                    //     type: "POST",
-                    //     data: formData,
-                    //     processData: false,
-                    //     contentType: false,
-                    //     success: function(data) {
-                    //         if (data.statusCode == 200) {
-                    //             if (form == 1) {
-                    //                 part1Next();
-                    //             }
-                    //             else if (form == 2) {
-                    //                 part2Next();
-                    //             }
-                    //             else if (form == 3) {
-                    //                 part3Next();
-                    //             }
-                    //             else if (form == 4) {
-                    //                 window.location.href = "/dashboard";
-                    //             }
-                    //         }
-                    //         else {
-                    //             showAlert(data.data, "danger");
-                    //         }
-                    //     },
-                    //     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    //         showAlert(errorThrown, "danger")
-                    //     }
-                    // })
+                    $.ajax({
+                        url: "/api/users/information.php",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        enctype: 'multipart/form-data',
+                        success: function(data) {
+                            if (data.statusCode == 200) {
+                                if (form == 1) {
+                                    part1Next();
+                                }
+                                else if (form == 2) {
+                                    part2Next();
+                                }
+                                else if (form == 3) {
+                                    part3Next();
+                                }
+                                else if (form == 4) {
+                                    window.location.href = "/dashboard";
+                                }
+                            }
+                            else if (data.statusCode == 401 || data.statusCode == 403) {
+                                window.location.href = "/login";
+                            }
+                            else {
+                                showAlert(data.data, "danger");
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            showAlert(errorThrown, "danger")
+                        }
+                    })
                 }
             })
 

@@ -1,5 +1,6 @@
 <?php
-    $env = parse_ini_file("../.env");
+    require "realpath.php";
+    $env = parse_ini_file($actualPath.".env");
     define("DB_HOST", $env['DB_HOST']);
     define("DB_USERNAME", $env['DB_USERNAME']);
     define("DB_PASSWORD", $env['DB_PASSWORD']);

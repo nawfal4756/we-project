@@ -65,7 +65,7 @@
                 <select class='form-select js-example-basic-multiple' name='$name' id='$name' multiple='multiple' style='width: 100%;'>
         ";
                     foreach ($options as $option) {
-                        echo "<option value='$option'>$option</option>";
+                        echo "<option value='$option->id'>$option->name</option>";
                     }
     
         echo "</select>
@@ -89,7 +89,7 @@
                 <select class='form-select' name='$name' id='$name' required>
                     <option selected disabled>Select $title</option>";
                     foreach ($options as $option) {
-                        echo "<option value='$option'>$option</option>";
+                        echo "<option value='$option->id'>$option->name</option>";
                     }
                 echo "</select>
                 <div class='valid-feedback'>
