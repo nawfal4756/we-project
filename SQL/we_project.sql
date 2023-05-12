@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3310
--- Generation Time: May 12, 2023 at 07:52 PM
+-- Generation Time: May 12, 2023 at 11:20 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -91,6 +91,7 @@ CREATE TABLE `job` (
   `id` int(11) NOT NULL,
   `companyId` int(11) NOT NULL,
   `employerId` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
   `location` varchar(300) NOT NULL,
   `type` varchar(50) NOT NULL,
   `requirements` varchar(1000) NOT NULL,
