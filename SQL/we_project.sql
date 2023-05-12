@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3310
--- Generation Time: May 03, 2023 at 10:15 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Host: 127.0.0.1:3310
+-- Generation Time: May 12, 2023 at 07:52 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -94,6 +94,8 @@ CREATE TABLE `job` (
   `location` varchar(300) NOT NULL,
   `type` varchar(50) NOT NULL,
   `requirements` varchar(1000) NOT NULL,
+  `minSalary` int(11) NOT NULL,
+  `maxSalary` int(11) NOT NULL,
   `blocked` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
