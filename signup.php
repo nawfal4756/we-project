@@ -93,6 +93,7 @@
                         processData: false,
                         contentType: false,
                         success: function(data) {
+                            console.log("Success", data)
                             if (data.statusCode == 200) {
                                 form.removeClass('was-validated');
                                 form[0].reset()
@@ -100,13 +101,14 @@
                                 showAlert(data.data, "success")
                                 setTimeout(function() {
                                     window.location.href = "login.php"
-                                }, 10000)
+                                }, 2000)
                             }
                             else {
-                                showAlert(data, "danger")
+                                showAlert(data.data, "danger")
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("Error", errorThrown)
                             showAlert(errorThrown, "danger")
                         }
                     })

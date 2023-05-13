@@ -5,10 +5,7 @@
         
         if (in_array($fileActualExt, $allowed)) {
             if ($size < $sizeAllowed) {
-                $fileNameNew = uniqid('', true).".".$fileActualExt;
-                $fileDestination = '/uploads/'.$fileNameNew;
-                move_uploaded_file($tmpName, $fileDestination);
-                return $fileNameNew;
+                return '0';
             }
             else {
                 return '2';

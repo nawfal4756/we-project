@@ -3,7 +3,7 @@
     require "../../common/connection.php";
     require "../../common/filecheck.php";
 
-    $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['id'];
     header("Content-Type: application/json;");
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['part'])) {
@@ -14,9 +14,9 @@
                     $dob = $_POST['dob'];
                     
                     try {
-                        $dateConverted = date('Y-m-d', strtotime(str_replace('-', '/', $date)));
+                        $dateConverted = date('Y-m-d', strtotime(str_replace('-', '/', $dob)));
                         $cleanedSpecialization = mysqli_real_escape_string($conn, $specialization);
-                        $sql = "UPDATE users SET specialization = '$cleanedSpecialization', dob = '$dateConverted' WHERE id = '$user_id'";
+                        $sql = "UPDATE user SET specialization = '$cleanedSpecialization', dob = '$dateConverted' WHERE id = '$user_id'";
                         $result = $conn->query($sql);
                         echo json_encode(array("statusCode" => 200, "data" => "Information Updated Successfully"));
                         die();
@@ -54,6 +54,18 @@
                     }
                     else {
                         try {
+                            $fileExt = explode('.', $profileName);
+                            $fileActualExt = strtolower(end($fileExt));
+                            $fileNameNew = uniqid('', true).".".$fileActualExt;
+                            $fileDestination = '../../uploads/'.$fileNameNew;
+                            move_uploaded_file($profileTmpName, $fileDestination);
+                            
+                            $fileExt = explode('.', $cvName);
+                            $fileActualExt = strtolower(end($fileExt));
+                            $fileNameNew = uniqid('', true).".".$fileActualExt;
+                            $fileDestination = '../../uploads/'.$fileNameNew;
+
+                            move_uploaded_file($cvTmpName, $fileDestination);
                             $sql = "UPDATE user SET profilePic = '$profileName', cv = '$cvName' WHERE id = '$user_id'";
                             $result = $conn->query($sql);
                             echo json_encode(array("statusCode" => 200, "data" => "Information Updated Successfully"));

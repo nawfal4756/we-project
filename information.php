@@ -1,6 +1,23 @@
-<?php 
+<?php
     require "users/navbar.php";
-    require "users/verification.php";
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (isset($_SESSION['id']) && isset($_SESSION['type'])) {
+        if ($_SESSION['end'] < time()) {
+            session_unset();
+            session_destroy();
+            header("Location: /login.php");
+        }
+
+        if ($_SESSION['type'] != "users") {
+            header("Location: /login.php");
+        }
+    }
+    else {
+        header("Location: /login.php");
+    }
 
     require "Components/inputs.php";
 ?>
@@ -66,14 +83,16 @@
         <div class="row" id="part3" style="display: none;">
             <div class="col-sm-12">
                 <form id="form3" action="#" method="post" class="needs-validation" novalidate>
-                    <div id="degreeFields">
-                        <?php 
-                            selectField("degree[]", "Degree", array((object)['id'=>1, 'name'=>'Bachelors'], (object)['id'=>2, 'name'=>'Masters'], (object)['id'=>3, 'name'=>'PhD']));
-                            inputField("field[]", "text", "Field");
-                            inputField("instituteName[]", "text", "Institute Name");
-                            inputField("cgpa[]", "text", "CGPA");
-                            dateField("ending[]", "Graduation Year");
-                        ?>
+                    <div id="degreeForm">
+                        <div id="degreeFields">
+                            <?php 
+                                selectField("degree[]", "Degree", [], "degree");
+                                inputField("field[]", "text", "Field");
+                                inputField("instituteName[]", "text", "Institute Name");
+                                inputField("cgpa[]", "text", "CGPA");
+                                dateField("ending[]", "Graduation Year");
+                            ?>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <button class="btn btn-primary" type="button" id="addDegree"><i class="bi bi-plus"></i> Add</button>
@@ -89,7 +108,7 @@
             <div class="col-sm-12">
                 <form id="form4" action="#" method="post" class="needs-validation" novalidate>
                     <?php 
-                        fancySelect("skills[]", "Skills", array((object)['id'=> 1, 'name'=>'PHP'], (object)['id'=> 2, 'name'=>'JavaScript']))
+                        fancySelect("skills[]", "Skills", [], "skills")
                     ?>
                     
                     <div class="mb-3 d-flex justify-content-between">
@@ -150,20 +169,44 @@
         }
 
         $(document).ready(function() {
+            $.ajax({
+                url: "/api/degree/getAll.php",
+                type: "GET",
+                success: function(data) {
+                    if (data.statusCode == 200) {
+                        data.data.forEach(degree => {
+                            $("#degree").append(`<option value="${degree.id}">${degree.name}</option>`);
+                        });
+                    }
+                    else {
+                        showAlert(data.data, "danger");
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    showAlert(errorThrown, "danger")
+                }
+            })
+
+            $.ajax({
+                url: "/api/skills/getAll.php",
+                type: "GET",
+                success: function(data) {
+                    if (data.statusCode == 200) {
+                        data.data.forEach(degree => {
+                            $("#skills").append(`<option value="${degree.id}">${degree.name}</option>`);
+                        });
+                    }
+                    else {
+                        showAlert(data.data, "danger");
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    showAlert(errorThrown, "danger")
+                }
+            })
+
             $("#addDegree").click(function() {
-                $("#degreeFields").append(`
-                    <div class="mb-3" >
-                        <hr>
-                        <button class="btn btn-danger degreeRemove" id="removeDegree"><i class="bi bi-trash"></i> Remove</button>
-                        <?php 
-                        selectField("degree[]", "Degree", array((object)['id'=>1, 'name'=>'Bachelors'], (object)['id'=>2, 'name'=>'Masters'], (object)['id'=>3, 'name'=>'PhD']));
-                        inputField("field[]", "text", "Field");
-                        inputField("instituteName[]", "text", "Institute Name");
-                        inputField("cgpa[]", "text", "CGPA");
-                        dateField("ending[]", "Graduation Year");
-                        ?>
-                    </div>
-                `);
+                $("#degreeForm").append($("#degreeFields").html());
             })
 
             $(document).on("click", ".degreeRemove", function() {
@@ -218,6 +261,7 @@
                         contentType: false,
                         enctype: 'multipart/form-data',
                         success: function(data) {
+                            console.log("Success", data);
                             if (data.statusCode == 200) {
                                 if (form == 1) {
                                     part1Next();
@@ -229,17 +273,18 @@
                                     part3Next();
                                 }
                                 else if (form == 4) {
-                                    window.location.href = "/dashboard";
+                                    window.location.href = "/information.php";
                                 }
                             }
                             else if (data.statusCode == 401 || data.statusCode == 403) {
-                                window.location.href = "/login";
+                                window.location.href = "/login.php";
                             }
                             else {
                                 showAlert(data.data, "danger");
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("Error", errorThrown);
                             showAlert(errorThrown, "danger")
                         }
                     })

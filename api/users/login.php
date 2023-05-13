@@ -17,7 +17,7 @@
                 $rememberMe = false;
             }
     
-            $sql = "SELECT id FROM users WHERE email = '$cleanedEmail' AND password = '$cleanedPassword'";
+            $sql = "SELECT id FROM user WHERE email = '$cleanedEmail' AND password = '$cleanedPassword'";
             
             try {
                 $result = $conn->query($sql);
