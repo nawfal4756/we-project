@@ -4,17 +4,19 @@
     require "Components/inputs.php";
     
     if (isset($_SESSION['id'])) {
-        $id = $_SESSION['id'];
-        $sql = "SELECT completeProfile FROM user WHERE id = $id";
-        try {
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
-            if ($row['completeProfile'] == 0) {
-                header("Location: /users/information.php");
+        if ($_SESSION['type'] == "users") {
+            $id = $_SESSION['id'];
+            $sql = "SELECT completeProfile FROM user WHERE id = $id";
+            try {
+                $result = $conn->query($sql);
+                $row = $result->fetch_assoc();
+                if ($row['completeProfile'] == 0) {
+                    header("Location: /users/information.php");
+                }
             }
-        }
-        catch (Exception $e) {
-            //
+            catch (Exception $e) {
+                //
+            }
         }
     }
 ?>
