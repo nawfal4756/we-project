@@ -15,12 +15,16 @@
             $cleanedGender = mysqli_real_escape_string($conn, $gender);
             $cleanedPassword = mysqli_real_escape_string($conn, $password);
 
-            if ($gender != 'Male' || $gender != 'Female') {
+            if (strlen($cleanedName) < 3 || strlen($cleanedName) > 50) {
+                echo json_encode(array("statusCode" => 400, "data" => "Name Length Incorrect"));
+                die();
+            }
+            if ($gender != 'Male' && $gender != 'Female') {
                 echo json_encode(array("statusCode" => 400, "data" => "Gender Valued Incorrect"));
                 die();
             }
 
-            $sql = "INSERT INTO users(name, email, phone, gender, password) VALUES ('$cleanedName', '$cleanedEmail', '$cleanedPhone', '$cleanedGender', '$cleanedPassword')";
+            $sql = "INSERT INTO user (name, email, phone, gender, password) VALUES ('$cleanedName', '$cleanedEmail', '$cleanedPhone', '$cleanedGender', '$cleanedPassword')";
             try {
                 $result = $conn->query($sql);
                 echo json_encode(array("statusCode" => 200, "data" => "Sign Up Successful"));

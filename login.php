@@ -77,7 +77,7 @@
                                 window.location.href = "index.php"
                             }
                             else {
-                                showAlert(data, "danger")
+                                showAlert(data.data, "danger")
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {

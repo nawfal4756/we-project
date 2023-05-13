@@ -1,15 +1,23 @@
 <?php 
-    function inputField($name, $type, $title) {
-        echo "<div class='form-floating mb-3'>
-            <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' required>
-            <label for='$name'>$title</label>
-            <div class='valid-feedback'>
-                Looks good!
-            </div>
-            <div class='invalid-feedback'>
-                Please enter a valid $title.
-            </div>
-        </div>";
+    function inputField($name, $type, $title, $required = true) {
+        if ($required) {
+            echo "<div class='form-floating mb-3'>
+                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' required>
+                <label for='$name'>$title</label>
+                <div class='valid-feedback'>
+                    Looks good!
+                </div>
+                <div class='invalid-feedback'>
+                    Please enter a valid $title.
+                </div>
+            </div>";
+        }
+        else {
+            echo "<div class='form-floating mb-3'>
+                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello'>
+                <label for='$name'>$title</label>
+            </div>";
+        }
     }
 
     function checkBoxField($name, $value, $title, $required, $incorrectValidationMessage = 'Please check this box') {
@@ -59,10 +67,11 @@
             </div>";
     }
 
-    function fancySelect($name, $title, $options) {
+    function fancySelect($name, $title, $options, $id = null) {
+        $actualId = $id ?? $name;
         echo "<div class='mb-3'>
                 <label for='$name' class='form-label'>$title</label>
-                <select class='form-select js-example-basic-multiple' name='$name' id='$name' multiple='multiple' style='width: 100%;'>
+                <select class='form-select js-example-basic-multiple' name='$name' id='$actualId' multiple='multiple' style='width: 100%;'>
         ";
                     foreach ($options as $option) {
                         echo "<option value='$option->id'>$option->name</option>";
@@ -83,10 +92,11 @@
             </script>";
     }
 
-    function selectField($name, $title, $options) {
+    function selectField($name, $title, $options, $id = null) {
+        $actualId = $id ?? $name;
         echo "<div class='mb-3'>
                 <label for='$name' class='form-label'>$title</label>
-                <select class='form-select' name='$name' id='$name' required>
+                <select class='form-select' name='$name' id='$actualId' required>
                     <option selected disabled>Select $title</option>";
                     foreach ($options as $option) {
                         echo "<option value='$option->id'>$option->name</option>";
