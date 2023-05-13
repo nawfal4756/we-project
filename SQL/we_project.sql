@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3310
--- Generation Time: May 12, 2023 at 11:45 PM
+-- Generation Time: May 13, 2023 at 11:59 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -62,6 +62,14 @@ CREATE TABLE `degree` (
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `degree`
+--
+
+INSERT INTO `degree` (`id`, `name`) VALUES
+(1, 'Bachelors'),
+(2, 'Masters');
+
 -- --------------------------------------------------------
 
 --
@@ -110,7 +118,8 @@ CREATE TABLE `job` (
 CREATE TABLE `jobapplication` (
   `userId` int(11) NOT NULL,
   `comapnyId` int(11) NOT NULL,
-  `jobId` int(11) NOT NULL
+  `jobId` int(11) NOT NULL,
+  `status` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -135,6 +144,15 @@ CREATE TABLE `skills` (
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `skills`
+--
+
+INSERT INTO `skills` (`id`, `name`) VALUES
+(1, 'PHP'),
+(2, 'Javascript'),
+(3, 'Java');
+
 -- --------------------------------------------------------
 
 --
@@ -153,9 +171,17 @@ CREATE TABLE `user` (
   `cv` varchar(250) DEFAULT NULL,
   `specialization` varchar(75) DEFAULT NULL,
   `completeProfile` int(11) NOT NULL DEFAULT 0,
+  `acceptedNotification` int(11) NOT NULL DEFAULT 0,
   `blocked` int(11) NOT NULL DEFAULT 0,
   `tempPassword` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `email`, `phone`, `password`, `gender`, `dob`, `profilePic`, `cv`, `specialization`, `completeProfile`, `acceptedNotification`, `blocked`, `tempPassword`) VALUES
+(1, 'Ahmad Raza', 'ahmad123@gmail.com', '03234407000', '81dc9bdb52d04dc20036dbd8313ed055', 'Male', '1997-12-05', '646001e29e3801.43869921.jpg', '645fc94f500ac7.34615182.pdf', 'Software Engineer', 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -172,6 +198,13 @@ CREATE TABLE `usereducation` (
   `endYear` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `usereducation`
+--
+
+INSERT INTO `usereducation` (`userId`, `degreeId`, `field`, `instituteName`, `cgpa`, `endYear`) VALUES
+(1, 1, 'Software Engineering', 'NUST', 2.82, 2025);
+
 -- --------------------------------------------------------
 
 --
@@ -182,6 +215,14 @@ CREATE TABLE `userskills` (
   `userId` int(11) NOT NULL,
   `skillId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `userskills`
+--
+
+INSERT INTO `userskills` (`userId`, `skillId`) VALUES
+(1, 1),
+(1, 2);
 
 --
 -- Indexes for dumped tables
@@ -284,7 +325,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `degree`
 --
 ALTER TABLE `degree`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `employer`
@@ -302,13 +343,13 @@ ALTER TABLE `job`
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
