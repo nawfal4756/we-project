@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3310
--- Generation Time: May 13, 2023 at 11:59 PM
+-- Generation Time: May 14, 2023 at 12:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -106,7 +106,8 @@ CREATE TABLE `job` (
   `requirements` varchar(1000) NOT NULL,
   `minSalary` int(11) NOT NULL,
   `maxSalary` int(11) NOT NULL,
-  `blocked` int(11) NOT NULL DEFAULT 0
+  `blocked` int(11) NOT NULL DEFAULT 0,
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
