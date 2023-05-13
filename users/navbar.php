@@ -25,7 +25,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId">
                         <?php 
-                            if (!isset($_SESSION['email'])) {
+                            if (!isset($_SESSION['id'])) {
                         ?>
                             <a class="dropdown-item" href="/login.php">Login</a>
                             <a class="dropdown-item" href="/signup.php">Sign Up</a>

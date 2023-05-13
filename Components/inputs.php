@@ -1,8 +1,8 @@
 <?php 
-    function inputField($name, $type, $title, $required = true) {
+    function inputField($name, $type, $title, $required = true, $value = null) {
         if ($required) {
             echo "<div class='form-floating mb-3'>
-                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' required>
+                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' value='$value' required>
                 <label for='$name'>$title</label>
                 <div class='valid-feedback'>
                     Looks good!
@@ -14,7 +14,7 @@
         }
         else {
             echo "<div class='form-floating mb-3'>
-                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello'>
+                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' value='$value'>
                 <label for='$name'>$title</label>
             </div>";
         }

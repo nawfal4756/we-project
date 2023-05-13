@@ -10,7 +10,7 @@
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             if ($row['completeProfile'] == 0) {
-                header("Location: /information.php");
+                header("Location: /users/information.php");
             }
         }
         catch (Exception $e) {

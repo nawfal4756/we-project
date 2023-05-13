@@ -1,5 +1,5 @@
 <?php
-    // require "../common/connection.php";
+    require "../common/connection.php";
 
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -22,7 +22,7 @@
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             if ($row['completeProfile'] == 0) {
-                header("Location: /information.php");
+                header("Location: /users/information.php");
             }
         }
         catch (Exception $e) {
