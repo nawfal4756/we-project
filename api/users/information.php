@@ -56,17 +56,17 @@
                         try {
                             $fileExt = explode('.', $profileName);
                             $fileActualExt = strtolower(end($fileExt));
-                            $fileNameNew = uniqid('', true).".".$fileActualExt;
-                            $fileDestination = '../../uploads/'.$fileNameNew;
+                            $profileNameNew = uniqid('', true).".".$fileActualExt;
+                            $fileDestination = '../../uploads/'.$profileNameNew;
                             move_uploaded_file($profileTmpName, $fileDestination);
                             
                             $fileExt = explode('.', $cvName);
                             $fileActualExt = strtolower(end($fileExt));
-                            $fileNameNew = uniqid('', true).".".$fileActualExt;
-                            $fileDestination = '../../uploads/'.$fileNameNew;
+                            $cvNameNew = uniqid('', true).".".$fileActualExt;
+                            $fileDestination = '../../uploads/'.$cvNameNew;
 
                             move_uploaded_file($cvTmpName, $fileDestination);
-                            $sql = "UPDATE user SET profilePic = '$profileName', cv = '$cvName' WHERE id = '$user_id'";
+                            $sql = "UPDATE user SET profilePic = '$profileNameNew', cv = '$cvNameNew' WHERE id = '$user_id'";
                             $result = $conn->query($sql);
                             echo json_encode(array("statusCode" => 200, "data" => "Information Updated Successfully"));
                             die();

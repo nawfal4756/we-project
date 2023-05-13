@@ -273,7 +273,7 @@
                                     part3Next();
                                 }
                                 else if (form == 4) {
-                                    window.location.href = "/information.php";
+                                    window.location.href = "/index.php";
                                 }
                             }
                             else if (data.statusCode == 401 || data.statusCode == 403) {
