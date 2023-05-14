@@ -1,7 +1,8 @@
 <?php
-    require "users/navbar.php";
     if (isset($_SESSION['id'])) {
-        header("Location: index.php");
+        if ($_SESSION['type'] == "admin") {
+            header("Location: /admin/dashboard.php");
+        }
     }
 ?>
 
@@ -24,19 +25,19 @@
         <div class="d-flex justify-content-center align-items-center h-100">
             <div class="card w-25">
                 <div class="card-body">
-                    <?php include "Components/alert.php" ?>
-                    <h4 class="card-title text-center">Log In</h4>
+                    <?php include "../Components/alert.php" ?>
+                    <h4 class="card-title text-center">Admin Log In</h4>
                     <hr>
                     <form id="loginForm" class="needs-validation p-3" novalidate action="#" method="post">
                         <?php 
-                            include "Components/inputs.php";
+                            include "../Components/inputs.php";
                             inputField("email", "email", "Email Address");
                             inputField("password", "password", "Password");
                             checkBoxField("rememberMe", "rememberMe", "Remember Me", false);
                         ?>
                         <div class="mb-3">
-                            <a href="signup.php">Don't have an account? Click Here</a> <br>
-                            <a href="/employer/">Are you an employer? Click Here</a>
+                            <a href="/login.php">Are you an user? Click Here</a>
+                            <a href="/employer/login.php">Are you an employer? Click Here</a>
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary w-100 text-white">Login</button>
@@ -67,14 +68,14 @@
                     let passwordHash = CryptoJS.MD5(formData.get("password")).toString();
                     formData.set("password", passwordHash);
                     $.ajax({
-                        url: "/api/users/login.php",
+                        url: "/api/admin/login.php",
                         type: "POST",
                         data: formData,
                         processData: false,
                         contentType: false,
                         success: function(data) {
                             if (data.statusCode == 200) {
-                                window.location.href = "index.php"
+                                window.location.href = "/admin/dashboard.php"
                             }
                             else {
                                 showAlert(data.data, "danger")

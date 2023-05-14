@@ -9,30 +9,23 @@
         if ($_SESSION['end'] < time()) {
             session_unset();
             session_destroy();
-            header("Location: /login.php");
+            header("Location: /admin/index.php");
         }
 
-        if ($_SESSION['type'] != "users") {
-            header("Location: /login.php");
+        if ($_SESSION['type'] != "admin") {
+            header("Location: /admin/index.php");
         }
 
         $id = $_SESSION['id'];
-        $sql = "SELECT completeProfile, blocked FROM user WHERE id = $id";
+        $sql = "SELECT blocked FROM admin WHERE id = $id";
         $completeProfile = false;
         try {
             $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
-            if ($row['completeProfile'] == 0) {
-                header("Location: /users/information.php");
-            }
-            else {
-                $completeProfile = true;
-            }
-
+            $row = mysqli_fetch_assoc($result);
             if ($row['blocked'] == 1) {
                 session_unset();
                 session_destroy();
-                header("Location: /login.php");
+                header("Location: /admin/index.php");
             }
         }
         catch (Exception $e) {
@@ -40,6 +33,6 @@
         }
     }
     else {
-        header("Location: /login.php");
+        header("Location: /admin/index.php");
     }
 ?>
