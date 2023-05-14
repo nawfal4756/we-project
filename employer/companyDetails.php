@@ -1,18 +1,23 @@
 <?php
+    include "../common/connection.php";
+    
     if (session_status()=== PHP_SESSION_NONE )
     {
         session_start();
     }
     
     $employerId = $_SESSION['employerId'] ;
-    include "../common/connection.php";
+    echo '<script> console.log(" Employer id ");</script>';
+    echo "<script> console.log('" . $employerId."');</script>";
+    
 
     $sql= "SELECT company.name , company.location
     FROM employer
     JOIN company
     ON employer.companyid = company.id
-    where employer.id ='".$employerId."';";
+    where employer.id ='$employerId';";
 
+    // echo "<script> console.log('$sql');</script>";
     $res = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($res);
 ?>
@@ -44,7 +49,7 @@
     </div>
 
     <!-- company Details -->
-    <section class="vh-100" style="background-color: #eee;">
+    <section class="vh-100" >
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-12 col-xl-4">
@@ -52,21 +57,13 @@
             <div class="card" style="border-radius: 15px;">
             <div class="card-body text-center">
                 <div class="mt-3 mb-4">
-                <img src=""
+                <img src="c.png"
                     class="rounded-circle img-fluid" style="width: 100px;" />
                 </div>
-                <h4 class="mb-2"><?php $row['name'] ?></h4>
-                <p class="text-muted mb-4"> <?php $row['location'] ?></p>
+                <h1 class="mb-2 text-shadow"><?php echo $row['name']; ?></h1>
+                <h3 class="text-muted mb-4"> <?php echo $row['location']; ?></h3>
                 <div class="mb-4 pb-2">
-                <button type="button" class="btn btn-outline-primary btn-floating">
-                    <i class="fab fa-facebook-f fa-lg"></i>
-                </button>
-                <button type="button" class="btn btn-outline-primary btn-floating">
-                    <i class="fab fa-twitter fa-lg"></i>
-                </button>
-                <button type="button" class="btn btn-outline-primary btn-floating">
-                    <i class="fab fa-skype fa-lg"></i>
-                </button>
+                
                 </div>
                 <button type="button" class="btn btn-primary btn-rounded btn-lg">
                 Message now

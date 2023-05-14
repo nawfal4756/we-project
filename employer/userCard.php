@@ -17,7 +17,7 @@
 }
 
 </style>
-<div class="card ml-5 shadow-lg p-3 mb-5 bg-white rounded" style="width:400px; height: 700px;">
+<div id="<?php echo $userId; ?>" class="card ml-5 shadow-lg p-3 mb-5 bg-white rounded" style="width:400px; height: 700px;">
   <div class="card-body">
     <img class="card-img-top" src="av.png" alt="Card image" style="width:100%">
     <h1 class="card-title text-shadow"> <?php echo $row2['name']; ?></h1>
@@ -27,7 +27,7 @@
     <p class="card-text"> Job Requirements : <?php echo $row['requirements']; ?></p>
     <p class="card-text"><b>Salary :  <?php echo $row['minSalary']; ?> -  <?php echo $row['maxSalary']; ?></b></p>
     <a href="viewdetails.php?userId=<?php echo $userId; ?>" class="btn btn-primary"> View CV </a>
-    <button href="" id="accept" class="btn btn-primary"> Accept </button>
+    <button href="acceptUser.php?userId=<?php echo $userId; ?>" id="accept" class="btn btn-primary"> Accept </button>
   </div>
 </div>
 
@@ -37,3 +37,8 @@
 <?php
     }
 ?>
+
+
+<script>
+  
+</script>

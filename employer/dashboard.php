@@ -22,6 +22,9 @@
     <div>
         <?php require "navbar.php" ?>;
     </div>
+    <div>
+        <h1 class="text-shadow mt-5 text-center text-white mb-5"><b> Employer Panel</b></h1>
+    </div>
 
     <!-- users which applied  -->
     <?php
