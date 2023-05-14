@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3310
--- Generation Time: May 14, 2023 at 12:04 AM
+-- Generation Time: May 14, 2023 at 02:08 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -51,6 +51,13 @@ CREATE TABLE `company` (
   `blocked` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`id`, `name`, `logo`, `location`, `blocked`) VALUES
+(1, 'Softec', 'abc.jpg', 'Karachi', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -90,6 +97,13 @@ CREATE TABLE `employer` (
   `tempPassword` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `employer`
+--
+
+INSERT INTO `employer` (`id`, `name`, `email`, `phone`, `password`, `gender`, `dob`, `profilePic`, `companyId`, `blocked`, `tempPassword`) VALUES
+(1, 'Nawfal', 'nawfal@gmail.com', '03042570841', 'asdfghjkl', 'Male', '2013-05-01', 'abc.jpg', 1, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -110,6 +124,14 @@ CREATE TABLE `job` (
   `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `job`
+--
+
+INSERT INTO `job` (`id`, `companyId`, `employerId`, `title`, `location`, `type`, `requirements`, `minSalary`, `maxSalary`, `blocked`, `createdAt`) VALUES
+(1, 1, 1, 'Software Engineer', 'Karachi', 'Hybrid', 'Very high requirements\r\nAlways hard to join', 12000, 15000, 0, '2023-05-14 12:02:34'),
+(2, 1, 1, 'Software Quality Assurance', 'Lahore', 'On-Site', 'abc\r\ndef\r\nghi', 10000, 11000, 0, '2023-05-14 12:03:40');
+
 -- --------------------------------------------------------
 
 --
@@ -118,10 +140,19 @@ CREATE TABLE `job` (
 
 CREATE TABLE `jobapplication` (
   `userId` int(11) NOT NULL,
-  `comapnyId` int(11) NOT NULL,
+  `companyId` int(11) NOT NULL,
   `jobId` int(11) NOT NULL,
-  `status` varchar(25) NOT NULL
+  `status` varchar(25) NOT NULL DEFAULT 'In-Progress',
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jobapplication`
+--
+
+INSERT INTO `jobapplication` (`userId`, `companyId`, `jobId`, `status`, `createdAt`) VALUES
+(1, 1, 1, 'In-Progress', '2023-05-14 17:07:50'),
+(1, 1, 2, 'In-Progress', '2023-05-14 17:07:50');
 
 -- --------------------------------------------------------
 
@@ -133,6 +164,16 @@ CREATE TABLE `jobskills` (
   `jobId` int(11) NOT NULL,
   `skillId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jobskills`
+--
+
+INSERT INTO `jobskills` (`jobId`, `skillId`) VALUES
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 3);
 
 -- --------------------------------------------------------
 
@@ -182,7 +223,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `phone`, `password`, `gender`, `dob`, `profilePic`, `cv`, `specialization`, `completeProfile`, `acceptedNotification`, `blocked`, `tempPassword`) VALUES
-(1, 'Ahmad Raza', 'ahmad123@gmail.com', '03234407000', '81dc9bdb52d04dc20036dbd8313ed055', 'Male', '1997-12-05', '646001e29e3801.43869921.jpg', '645fc94f500ac7.34615182.pdf', 'Software Engineer', 1, 0, 0, 0);
+(1, 'Ahmad Raza', 'ahmad123@gmail.com', '03234407000', '900150983cd24fb0d6963f7d28e17f72', 'Male', '1997-12-04', '6460116c7b5120.13515335.jpg', '6460116c80bbe8.80589310.pdf', 'Software Engineer', 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -204,7 +245,7 @@ CREATE TABLE `usereducation` (
 --
 
 INSERT INTO `usereducation` (`userId`, `degreeId`, `field`, `instituteName`, `cgpa`, `endYear`) VALUES
-(1, 1, 'Software Engineering', 'NUST', 2.82, 2025);
+(1, 1, 'Software Engineering', 'FAST', 2.82, 2024);
 
 -- --------------------------------------------------------
 
@@ -268,8 +309,8 @@ ALTER TABLE `job`
 -- Indexes for table `jobapplication`
 --
 ALTER TABLE `jobapplication`
-  ADD PRIMARY KEY (`userId`,`comapnyId`,`jobId`),
-  ADD KEY `Company ID JobApplication` (`comapnyId`),
+  ADD PRIMARY KEY (`userId`,`companyId`,`jobId`),
+  ADD KEY `Company ID JobApplication` (`companyId`),
   ADD KEY `Job ID JobApplication` (`jobId`);
 
 --
@@ -320,7 +361,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `degree`
@@ -332,13 +373,13 @@ ALTER TABLE `degree`
 -- AUTO_INCREMENT for table `employer`
 --
 ALTER TABLE `employer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `skills`
@@ -373,7 +414,7 @@ ALTER TABLE `job`
 -- Constraints for table `jobapplication`
 --
 ALTER TABLE `jobapplication`
-  ADD CONSTRAINT `Company ID JobApplication` FOREIGN KEY (`comapnyId`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Company ID JobApplication` FOREIGN KEY (`companyId`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `Job ID JobApplication` FOREIGN KEY (`jobId`) REFERENCES `job` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `User ID JobApplication` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
