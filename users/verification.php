@@ -17,7 +17,7 @@
         }
 
         $id = $_SESSION['id'];
-        $sql = "SELECT completeProfile FROM user WHERE id = $id";
+        $sql = "SELECT completeProfile, blocked FROM user WHERE id = $id";
         $completeProfile = false;
         try {
             $result = $conn->query($sql);
@@ -27,6 +27,12 @@
             }
             else {
                 $completeProfile = true;
+            }
+
+            if ($row['blocked'] == 1) {
+                session_unset();
+                session_destroy();
+                header("Location: /login.php");
             }
         }
         catch (Exception $e) {
