@@ -7,7 +7,7 @@
             $id = $_GET['id'];
 
             $cleanedId = mysqli_real_escape_string($conn, $id);
-            $sql = "SELECT j.id, c.id as companyId, c.name, c.logo, j.title, j.requirements, j.location, j.type, j.minSalary, j.maxSalary FROM job j, company c WHERE j.id = '$cleanedId' AND j.companyId = c.id;";
+            $sql = "SELECT j.id, c.id as companyId, c.name, c.logo, j.title, j.requirements, j.location, j.type, j.minSalary, j.maxSalary FROM job j, company c WHERE j.id = '$cleanedId' AND j.companyId = c.id; AND j.blocked = 0 AND c.blocked = 0;";
             $skillSql = "SELECT s.name FROM job j, jobskills js, skills s WHERE j.id = '$cleanedId' AND j.id = js.jobId AND js.skillId = s.id;";
             try {
                 $result = $conn->query($sql);

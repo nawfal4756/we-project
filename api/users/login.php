@@ -17,12 +17,16 @@
                 $rememberMe = false;
             }
     
-            $sql = "SELECT id FROM user WHERE email = '$cleanedEmail' AND password = '$cleanedPassword'";
+            $sql = "SELECT id, blocked FROM user WHERE email = '$cleanedEmail' AND password = '$cleanedPassword'";
             
             try {
                 $result = $conn->query($sql);
                 if (mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
+                    if ($row['blocked'] == 1) {
+                        echo json_encode(array("statusCode" => 401, "data" => "Account is Blocked"));
+                        die();
+                    }
                     $_SESSION['id'] = $row['id'];
                     $_SESSION['start'] = time();
                     $_SESSION['type'] = "users";

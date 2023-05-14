@@ -71,7 +71,6 @@
                     id: id
                 },
                 success: function(data) {
-                    console.log("Success", data);
                     if (data.statusCode == 200) {
                         let job = data.data
                         completeData = job;
@@ -88,7 +87,6 @@
                     }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Error", errorThrown);
                     showAlert(errorThrown, "danger")
                 }
             })
@@ -102,7 +100,6 @@
                         companyId: completeData.companyId
                     },
                     success: function(data) {
-                        console.log("Success", data);
                         if (data.statusCode == 200) {
                             $("#apply").attr("disabled", true);
                             showAlert(data.data, "success")
@@ -115,7 +112,6 @@
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        console.log("Error", errorThrown);
                         showAlert(errorThrown, "danger")
                     }
                 })

@@ -1,11 +1,11 @@
 <?php 
     require "verification.php";
-    require "../../common/connection.php";
+    // require "../../common/connection.php";
     header("Content-Type: application/json;");
 
     if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $id = $_SESSION['id'];
-        $sql = "SELECT name, email, phone, dob, specialization, profilePic, cv FROM user WHERE id = $id";
+        $sql = "SELECT name, email, phone, dob, specialization, profilePic, cv FROM user WHERE id = $id AND blocked = 0;";
         $skillSql = "SELECT skillId FROM userskills WHERE userId = $id";
         $educationSql = "SELECT degreeId, field, instituteName, cgpa, endYear FROM usereducation WHERE userId = $id";
         try {

@@ -93,7 +93,6 @@
                         processData: false,
                         contentType: false,
                         success: function(data) {
-                            console.log("Success", data)
                             if (data.statusCode == 200) {
                                 form.removeClass('was-validated');
                                 form[0].reset()
@@ -108,7 +107,6 @@
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            console.log("Error", errorThrown)
                             showAlert(errorThrown, "danger")
                         }
                     })

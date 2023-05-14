@@ -1,11 +1,11 @@
 <?php 
     require "../users/verification.php";
-    require "../../common/connection.php";
+    // require "../../common/connection.php";
     header("Content-Type: application/json");
 
     if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $userId = $_SESSION['id'];
-        $sql = "SELECT c.name, j.title, j.type, ja.status FROM company c, job j, jobapplication ja WHERE c.id = j.companyId AND j.id = ja.jobId AND ja.userId = $userId";
+        $sql = "SELECT c.name, j.title, j.type, ja.status FROM company c, job j, jobapplication ja, user u WHERE c.id = j.companyId AND j.id = ja.jobId AND ja.userId = u.id AND ja.userId = $userId AND u.blocked = 0;";
         try {
             $result = $conn->query($sql);
             $data = array();

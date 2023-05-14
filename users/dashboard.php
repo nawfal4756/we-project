@@ -50,7 +50,6 @@
                 url: "/api/jobapplication/getUser.php",
                 type: "GET",
                 success: function(data) {
-                    console.log("Success", data);
                     if (data.statusCode == 200) {
                         if (data.num == 0) {
                             var tbody = $("tbody");
@@ -68,12 +67,18 @@
                             })
                         }
                     }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
+                    }
                     else {
                         showAlert(data.data, "danger");
                     }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Error", errorThrown);
                     showAlert(errorThrown, "danger")
                 }
             })

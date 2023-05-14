@@ -164,6 +164,13 @@
                             $("#degree").append(`<option value="${degree.id}">${degree.name}</option>`);
                         });
                     }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
+                    }
                     else {
                         showAlert(data.data, "danger");
                     }
@@ -181,6 +188,13 @@
                         $("#skills").select2({
                             data: data.data
                         });
+                    }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
                     }
                     else {
                         showAlert(data.data, "danger");
@@ -247,7 +261,6 @@
                         contentType: false,
                         enctype: 'multipart/form-data',
                         success: function(data) {
-                            console.log("Success", data);
                             if (data.statusCode == 200) {
                                 if (form == 1) {
                                     part1Next();
@@ -263,14 +276,17 @@
                                 }
                             }
                             else if (data.statusCode == 401 || data.statusCode == 403) {
-                                window.location.href = "/login.php";
+                                showAlert(data.data, "danger");
+                                $("body").scrollTop(0);
+                                setTimeout(function() {
+                                    window.location.href = "/login.php";
+                                }, 2000);
                             }
                             else {
                                 showAlert(data.data, "danger");
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            console.log("Error", errorThrown);
                             showAlert(errorThrown, "danger")
                         }
                     })

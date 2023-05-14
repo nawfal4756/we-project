@@ -84,10 +84,8 @@
                 url: "/api/jobs/getAll.php/?"+dataString,
                 type: "GET",
                 success: function(data) {
-                    console.log("Success", data);
                     if (data.statusCode == 200) {
                         if (data.num == 0) {
-                            console.log("No Jobs Found")
                             $("#jobs").html("")
                             $("#jobs").append(`
                                 <div class="col-sm-12">
@@ -98,7 +96,6 @@
                         } 
                         $("#jobs").html("")
                         let jobs = data.data
-                        console.log(jobs)
                         jobs.forEach((job) => {
                             $("#jobs").append(`
                             <div class="col-sm-12 col-md-6 mb-3">
@@ -129,12 +126,18 @@
                             `)
                         })
                     }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
+                    }
                     else {
                         showAlert(data.data, "danger")
                     }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log("Error", errorThrown);
                     showAlert(errorThrown, "danger")
                 }
             })
@@ -147,10 +150,16 @@
                 success: function(data) {
                     if (data.statusCode == 200) {
                         let skills = data.data
-                        console.log(skills)
                         $("#skills").select2({
                             data: skills
                         })
+                    }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
                     }
                     else {
                         showAlert(data.data, "danger")
@@ -199,7 +208,6 @@
                     formData.delete("skills[]")
                 }
                 let serializedData = new URLSearchParams(formData).toString()
-                console.log(serializedData)
                 let url = window.location.href
                 let urlSplitted = url.split("?")
                 let newUrl = urlSplitted[0] + "?" + serializedData
@@ -210,7 +218,6 @@
             $(document).on("click", ".applyJob", function() {
                 let id = $(this).attr("id")
                 let splittedId = id.split("-")
-                console.log(splittedId)
                 let jobId = splittedId[0]
                 let companyId = splittedId[1]
                 let data = {
@@ -222,17 +229,22 @@
                     type: "POST",
                     data: data,
                     success: function(data) {
-                        console.log("Success", data);
                         if (data.statusCode == 200) {
                             showAlert(data.data, "success")
                             checkParameter()
+                        }
+                        else if (data.statusCode == 401 || data.statusCode == 403) {
+                            showAlert(data.data, "danger");
+                            $("body").scrollTop(0);
+                            setTimeout(function() {
+                                window.location.href = "/login.php";
+                            }, 2000);
                         }
                         else {
                             showAlert(data.data, "danger")
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        console.log("Error", errorThrown);
                         showAlert(errorThrown, "danger")
                     }
                 })

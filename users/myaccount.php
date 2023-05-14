@@ -214,7 +214,6 @@
                 success: function(response) {
                     if (response.statusCode == 200) {
                         let data = response.data;
-                        console.log(data)
                         $("#name").val(data.name);
                         $("#email").val(data.email);
                         $("#phone").val(data.phone);
@@ -230,6 +229,13 @@
                         data.education.forEach((education) => {
                             addEducation(education);
                         })
+                    }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
                     }
                     else {
                         showAlert(response.data, "danger");
@@ -249,6 +255,13 @@
                     if (response.statusCode == 200) {
                         degrees = response.data
                     }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
+                    }
                     else {
                         showAlert(response.data, "danger");
                     }
@@ -266,6 +279,13 @@
                         $("#skills").select2({
                             data: response.data
                         })
+                    }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
                     }
                     else {
                         showAlert(response.data, "danger");
@@ -318,18 +338,23 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        console.log("Success", response);
                         if (response.statusCode == 200) {
                             $("body").scrollTop(0);
                             showAlert(response.data, "success");
                             getUserData();
+                        }
+                        else if (data.statusCode == 401 || data.statusCode == 403) {
+                            showAlert(data.data, "danger");
+                            $("body").scrollTop(0);
+                            setTimeout(function() {
+                                window.location.href = "/login.php";
+                            }, 2000);
                         }
                         else {
                             showAlert(response.data, "danger");
                         }
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        console.log("Error", errorThrown)
                         showAlert(errorThrown, "danger")
                     }
                 })

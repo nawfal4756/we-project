@@ -1,6 +1,6 @@
 <?php 
     require "../users/verification.php";
-    require "../../common/connection.php";
+    // require "../../common/connection.php";
     header("Content-Type: application/json");
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
