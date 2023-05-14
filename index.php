@@ -2,7 +2,7 @@
     require "users/navbar.php";
     require "common/connection.php";
     require "Components/inputs.php";
-    
+    echo $_SESSION['id'];
     if (isset($_SESSION['id'])) {
         if ($_SESSION['type'] == "users") {
             $id = $_SESSION['id'];
