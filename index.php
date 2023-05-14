@@ -4,17 +4,19 @@
     require "Components/inputs.php";
     
     if (isset($_SESSION['id'])) {
-        $id = $_SESSION['id'];
-        $sql = "SELECT completeProfile FROM user WHERE id = $id";
-        try {
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
-            if ($row['completeProfile'] == 0) {
-                header("Location: /users/information.php");
+        if ($_SESSION['type'] == "users") {
+            $id = $_SESSION['id'];
+            $sql = "SELECT completeProfile FROM user WHERE id = $id";
+            try {
+                $result = $conn->query($sql);
+                $row = $result->fetch_assoc();
+                if ($row['completeProfile'] == 0) {
+                    header("Location: /users/information.php");
+                }
             }
-        }
-        catch (Exception $e) {
-            //
+            catch (Exception $e) {
+                //
+            }
         }
     }
 ?>
@@ -36,6 +38,9 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 my-4">
+                <?php require "Components/alert.php"; ?>
+            </div>
+            <div class="col-sm-12 mb-3">
                 <h1 class="text-center">Recent Jobs Posted</h1>
             </div>
             <div class="col-sm-12 mb-3">
@@ -55,7 +60,7 @@
                                 inputField("maxSalary", "text", "Max Salary", false);
                                 inputField("location", "text", "Location", false);
                                 inputField("type", "text", "Type", false);
-                                fancySelect("skills[]", "Skills", array((object)['id'=> 1, 'name'=>'PHP'], (object)['id'=> 2, 'name'=>'JavaScript']))
+                                fancySelect("skills[]", "Skills", [], "skills")
                             ?>
                             <div class="mb-3">
                                 <button type="reset" class="btn btn-secondary">Reset</button>
@@ -67,48 +72,9 @@
                   </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6 mb-3">
-                <div class="card">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <img src="" alt="Company Logo">
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Job Title</h5>
-                                <p class="card-text">Job Description Here</p>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-6 mb-3">
-                <div class="card">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <img src="" alt="Company Logo">
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Job Title</h5>
-                                <p class="card-text">Job Description Here</p>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                                <a href=""><span class="badge bg-secondary">Skill</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div class="row d-flex justify-content-evenly" id="jobs">
+            
         </div>
     </div>
 
@@ -118,12 +84,94 @@
                 url: "/api/jobs/getAll.php/?"+dataString,
                 type: "GET",
                 success: function(data) {
-                    console.log(data)
+                    if (data.statusCode == 200) {
+                        if (data.num == 0) {
+                            $("#jobs").html("")
+                            $("#jobs").append(`
+                                <div class="col-sm-12">
+                                    <h2 class="text-center">No Jobs Found</h2>
+                                </div>
+                            `)
+                            return;
+                        } 
+                        $("#jobs").html("")
+                        let jobs = data.data
+                        jobs.forEach((job) => {
+                            $("#jobs").append(`
+                            <div class="col-sm-12 col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="col-sm-4 d-flex justify-content-center align-items-center">
+                                            <img src="/uploads/${job.logo}" alt="Company Logo">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${job.title}</h5>
+                                                <p class="card-text">${job.companyName}</p>
+                                                <p class="card-text">${job.location}</p>
+                                                <p class="card-text">${job.type}</p>
+                                                <p class="card-text">${job.minSalary} - ${job.maxSalary}</p>
+                                                ${job.skills.map((skill) =>{
+                                                    return `<span class="badge bg-secondary">${skill}</span>`
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-end">
+                                        <a class="btn btn-secondary mx-2" href="/jobs/view.php/?id=${job.id}">View</a>
+                                        <a class="btn btn-primary applyJob" id="${job.id}-${job.companyId}">Apply</a>
+                                    </div>
+                                </div>
+                            </div>
+                            `)
+                        })
+                    }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
+                    }
+                    else {
+                        showAlert(data.data, "danger")
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    showAlert(errorThrown, "danger")
                 }
             })
         }
 
-        $(document).ready(function() {
+        function getSkills() {
+            $.ajax({
+                url: "/api/skills/getAll.php",
+                type: "GET",
+                success: function(data) {
+                    if (data.statusCode == 200) {
+                        let skills = data.data
+                        $("#skills").select2({
+                            data: skills
+                        })
+                    }
+                    else if (data.statusCode == 401 || data.statusCode == 403) {
+                        showAlert(data.data, "danger");
+                        $("body").scrollTop(0);
+                        setTimeout(function() {
+                            window.location.href = "/login.php";
+                        }, 2000);
+                    }
+                    else {
+                        showAlert(data.data, "danger")
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    showAlert(errorThrown, "danger")
+                }
+            })
+        }
+
+        function checkParameter() {
             let mainUrl = window.location.href
             let urlSplitted = mainUrl.split("?")
             let data = ""
@@ -131,6 +179,11 @@
                 data = urlSplitted[1]
             }
             getData(data)
+        }
+
+        $(document).ready(function() {
+            checkParameter()
+            getSkills()
 
             $("form").submit(function(e) {
                 e.preventDefault()
@@ -155,12 +208,47 @@
                     formData.delete("skills[]")
                 }
                 let serializedData = new URLSearchParams(formData).toString()
-                console.log(serializedData)
                 let url = window.location.href
                 let urlSplitted = url.split("?")
                 let newUrl = urlSplitted[0] + "?" + serializedData
                 history.pushState(null, null, newUrl)
                 getData(serializedData)
+            })
+
+            $(document).on("click", ".applyJob", function() {
+                let id = $(this).attr("id")
+                let splittedId = id.split("-")
+                let jobId = splittedId[0]
+                let companyId = splittedId[1]
+                let data = {
+                    jobId: jobId,
+                    companyId: companyId
+                }
+                $.ajax({
+                    url: "/api/jobs/apply.php",
+                    type: "POST",
+                    data: data,
+                    success: function(data) {
+                        if (data.statusCode == 200) {
+                            showAlert(data.data, "success")
+                            checkParameter()
+                        }
+                        else if (data.statusCode == 401 || data.statusCode == 403) {
+                            showAlert(data.data, "danger");
+                            $("body").scrollTop(0);
+                            setTimeout(function() {
+                                window.location.href = "/login.php";
+                            }, 2000);
+                        }
+                        else {
+                            showAlert(data.data, "danger")
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        showAlert(errorThrown, "danger")
+                    }
+                })
+            
             })
         })
 

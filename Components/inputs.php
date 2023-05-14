@@ -54,17 +54,25 @@
             </div>";
     }
 
-    function fileSelectField($name, $title, $fileTypesAllowed) {
-        echo "<div class='mb-3'>
-                <label for='$name' class='form-label'>$title</label>
-                <input class='form-control' type='file' id='$name' name='$name' accept='$fileTypesAllowed' required>
-                <div class='valid-feedback'>
-                    Looks good!
-                </div>
-                <div class='invalid-feedback'>
-                    Please select a valid $title.
-                </div>
-            </div>";
+    function fileSelectField($name, $title, $fileTypesAllowed, $required = true) {
+        if ($required) {
+            echo "<div class='mb-3'>
+                    <label for='$name' class='form-label'>$title</label>
+                    <input class='form-control' type='file' id='$name' name='$name' accept='$fileTypesAllowed' required>
+                    <div class='valid-feedback'>
+                        Looks good!
+                    </div>
+                    <div class='invalid-feedback'>
+                        Please select a valid $title.
+                    </div>
+                </div>";
+        }
+        else {
+            echo "<div class='mb-3'>
+                    <label for='$name' class='form-label'>$title</label>
+                    <input class='form-control' type='file' id='$name' name='$name' accept='$fileTypesAllowed'>
+                </div>";
+        }
     }
 
     function fancySelect($name, $title, $options, $id = null) {

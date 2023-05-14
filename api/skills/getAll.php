@@ -1,5 +1,4 @@
-<?php 
-    require "../users/verification.php";
+<?php
     require "../../common/connection.php";
     header("Content-Type: application/json");
 
@@ -9,7 +8,7 @@
             $result = $conn->query($sql);
             $data = array();
             while ($row = $result->fetch_assoc()) {
-                array_push($data, $row);
+                array_push($data, array("id" => $row['id'], "text" => $row['name']));
             }
             echo json_encode(array("statusCode" => 200, "data" => $data));
         }

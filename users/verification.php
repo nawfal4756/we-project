@@ -18,11 +18,15 @@
 
         $id = $_SESSION['id'];
         $sql = "SELECT completeProfile FROM user WHERE id = $id";
+        $completeProfile = false;
         try {
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             if ($row['completeProfile'] == 0) {
                 header("Location: /users/information.php");
+            }
+            else {
+                $completeProfile = true;
             }
         }
         catch (Exception $e) {

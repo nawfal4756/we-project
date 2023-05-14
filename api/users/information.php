@@ -1,6 +1,6 @@
 <?php 
     require "verification.php";
-    require "../../common/connection.php";
+    // require "../../common/connection.php";
     require "../../common/filecheck.php";
 
     $user_id = $_SESSION['id'];
