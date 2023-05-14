@@ -177,6 +177,36 @@
                     die();
                 }
             }
+            else if ($part == "4") {
+                if (isset($_POST['oldPassword']) && isset($_POST['newPassword'])) {
+                    $oldPassword = $_POST['oldPassword'];
+                    $newPassword = $_POST['newPassword'];
+
+                    $sql = "SELECT id FROM user WHERE id = '$id' AND password = '$oldPassword';";
+                    try {
+                        $result = $conn->query($sql);
+                        if (mysqli_num_rows($result) > 0) {
+                            $sql = "UPDATE user SET password = '$newPassword' WHERE id = '$id'";
+                            $result = $conn->query($sql);
+                            echo json_encode(array("statusCode" => 200, "data" => "Information Updated Successfully"));
+                            die();
+                        }
+                        else {
+                            echo json_encode(array("statusCode" => 401, "data" => "Unauthorized Access"));
+                            session_destroy();
+                            die();
+                        }
+                    }
+                    catch (Exception $e) {
+                        echo json_encode(array("statusCode" => 500, "data" => "Internal Server Error: ". $e->getMessage().""));
+                        die();
+                    }
+                }
+                else {
+                    echo json_encode(array("statusCode" => 400, "data" => "Bad Request"));
+                    die();
+                }
+            }
             else {
                 echo json_encode(array("statusCode" => 400, "data" => "Bad Request"));
                 die();

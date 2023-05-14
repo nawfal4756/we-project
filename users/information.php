@@ -1,22 +1,8 @@
 <?php
     require "navbar.php";
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    if (isset($_SESSION['id']) && isset($_SESSION['type'])) {
-        if ($_SESSION['end'] < time()) {
-            session_unset();
-            session_destroy();
-            header("Location: /login.php");
-        }
-
-        if ($_SESSION['type'] != "users") {
-            header("Location: /login.php");
-        }
-    }
-    else {
-        header("Location: /login.php");
+    require "verification.php";
+    if ($completeProfile) {
+        header("Location: /users/dashboard.php");
     }
 
     require "../Components/inputs.php";
@@ -192,8 +178,8 @@
                 type: "GET",
                 success: function(data) {
                     if (data.statusCode == 200) {
-                        data.data.forEach(degree => {
-                            $("#skills").append(`<option value="${degree.id}">${degree.name}</option>`);
+                        $("#skills").select2({
+                            data: data.data
                         });
                     }
                     else {

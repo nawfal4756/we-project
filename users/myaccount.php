@@ -18,6 +18,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
 </head>
 <body>
     <div class="container">
@@ -113,6 +115,28 @@
                 <button class="btn btn-primary" type="submit">Update</button>
             </div>
         </form>
+        <hr>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="text-center">Change Password</h1>
+            </div>
+        </div>
+        <form action="#" class="needs-validation" method="post" id="form4">
+            <div class="row d-flex justify-content-evenly">
+                <div class="col-sm-12">
+                    <?php inputField("oldPassword", "password", "Old Password") ?>
+                </div>
+                <div class="col-sm-12">
+                    <?php inputField("newPassword", "password", "New Password") ?>
+                </div>
+                <div class="col-sm-12">
+                    <?php inputField("rePassword", "password", "Re-Enter New Password") ?>
+                </div>
+            </div>
+            <div class="col-sm-12 d-flex justify-content-end mb-3">
+                <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+        </form>
     </div>
 
     <div class="modal fade" id="cvModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
@@ -127,8 +151,8 @@
                         <p>Unable to display file <a id="cvA" href="">Download</a> instead</p>
                     </object>
                 </div>
-                <div class="p-3"><a class="btn btn-primary" target="_blank" href="">View on seperate page</a></div>
                 <div class="modal-footer">
+                    <a class="btn btn-secondary" target="_blank" href="">View on seperate page</a>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -200,7 +224,8 @@
                         $("#skills").trigger("change");
                         $("#profilePic").attr("src", `../uploads/${data.profilePic}`);
                         $("#cvView").attr("data", `/uploads/${data.cv}`);
-                        $(".modal-body") > $("a").attr("href", `/uploads/${data.cv}`);
+                        $(".modal-body").find("a").attr("href", `/uploads/${data.cv}`);
+                        $(".modal-footer").find("a").attr("href", `/uploads/${data.cv}`);
                         $("#education").html("")
                         data.education.forEach((education) => {
                             addEducation(education);
@@ -238,9 +263,8 @@
                 type: "GET",
                 success: function(response) {
                     if (response.statusCode == 200) {
-                        $("#skills").empty();
-                        response.data.forEach((skill) => {
-                            $("#skills").append(`<option value="${skill.id}">${skill.name}</option>`);
+                        $("#skills").select2({
+                            data: response.data
                         })
                     }
                     else {
@@ -271,6 +295,21 @@
                 }
                 else if (formId == "form3") {
                     formData.append("part", "3")
+                }
+                else if (formId == "form4") {
+                    formData.append("part", "4")
+                    let newPass = formData.get("newPassword")
+                    let reNewPass = formData.get("rePassword")
+                    if (newPass != reNewPass) {
+                        $("body").scrollTop(0);
+                        showAlert("New Password and Re-entered Password do not match", "danger");
+                        return;
+                    }
+                    let newPasswordHash = CryptoJS.MD5(formData.get("newPassword")).toString();
+                    let oldPasswordHash = CryptoJS.MD5(formData.get("oldPassword")).toString();
+                    formData.set("newPassword", newPasswordHash);
+                    formData.set("oldPassword", oldPasswordHash);
+                    formData.delete("rePassword");
                 }
                 $.ajax({
                     url: "/api/users/update.php",
