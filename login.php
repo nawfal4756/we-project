@@ -73,6 +73,7 @@
                         processData: false,
                         contentType: false,
                         success: function(data) {
+                            console.log("Success", data)
                             if (data.statusCode == 200) {
                                 window.location.href = "index.php"
                             }
@@ -81,6 +82,7 @@
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            console.log("Error", errorThrown)
                             showAlert(errorThrown, "danger")
                         }
                     })
