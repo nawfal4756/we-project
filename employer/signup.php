@@ -34,9 +34,9 @@
                     <form id="signupForm" class="needs-validation p-3" novalidate action="#" method="post">
                         <?php 
                             
-                            inputField("name", "text", "Name");
-                            inputField("email", "email", "Email Address");
-                            inputField("phone", "text", "Phone Number");
+                            inputField("name", "text", "Name", "/^[a-z ,.'-]+$/i");
+                            inputField("email", "email", "Email Address", "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/");
+                            inputField("phone", "text", "Phone Number", "^(\+92|0)?3[0-9]{2}[0-9]{7}$");
                         ?>
                         <div class="mb-3">
                             <label for="gender" class="form-label">Gender</label> <br>
@@ -53,10 +53,10 @@
                             </div>
                         </div>
                         <?php
-                            inputField("companyName" ,"text", "Company name ");
-                            inputField("companyLocation" , "text" ,"Company location ");
-                            inputField("password", "password", "Password");
-                            inputField("confirmPassword", "password", "Confirm Password");
+                            inputField("companyName" ,"text", "Company Name", "/^[a-z ,.'-]+$/i");
+                            inputField("companyLocation" , "text" ,"Company Location", "/^[a-z ,.'-]+$/i");
+                            inputField("password", "password", "Password", "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/");
+                            inputField("confirmPassword", "password", "Confirm Password", "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/");
                             checkBoxField("terms", "terms", "I agree to the terms and conditions", true, "Please agree to the terms and conditions");
                         ?>
                         

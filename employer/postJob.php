@@ -37,14 +37,14 @@
           <div class="card-body inner-card">
             <div class="row justify-content-center">
               <div class="col-lg-5 col-md-6 col-sm-12">
-              <form id="postJob" method="post" class="needs-validation p-3" novalidate action="#">
+              <form id="postJob" method="post" class="needs-validation p-3" action="#">
                 <div class="form-group">
                   <label for="first-name">Enter job title : </label>
-                  <input type="text" class="form-control" id="job-title" name="job-title" placeholder="job title">
+                  <input type="text" class="form-control" id="job-title" name="job-title" placeholder="job title" pattern="/^[a-z ,.'-]+$/i">
                 </div>
                 <div class="form-group">
                   <label for="Mobile-Number"> Enter job location : </label>
-                  <input type="text" class="form-control" id="job-loc" name="job-loc" placeholder="job location">
+                  <input type="text" class="form-control" id="job-loc" name="job-loc" placeholder="job location" pattern="/^[a-z ,.'-]+$/i">
                 </div>
                 <div class="form-group">
                     <label for="jobType">Choose job type</label>
@@ -66,11 +66,11 @@
               <div class="col-lg-5 col-md-6 col-sm-12">
                 <div class="form-group">
                   <label > Minimum Salary : </label>
-                  <input type="text" class="form-control" id="min-sal" name="min-sal" placeholder="salary">
+                  <input type="text" class="form-control" id="min-sal" name="min-sal" placeholder="salary" pattern='\d+'>
                 </div>
                 <div class="form-group">
                   <label > Maximum Salary : </label>
-                  <input type="text" class="form-control" id="max-sal" name="max-sal" placeholder="salary">
+                  <input type="text" class="form-control" id="max-sal" name="max-sal" placeholder="salary" pattern='\d+'>
                 </div>
                 
               </div>

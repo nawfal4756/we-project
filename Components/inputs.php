@@ -1,8 +1,8 @@
 <?php 
-    function inputField($name, $type, $title, $required = true, $value = null) {
+    function inputField($name, $type, $title, $regex = null, $required = true, $value = null) {
         if ($required) {
             echo "<div class='form-floating mb-3'>
-                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' value='$value' required>
+                <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' value='$value' pattern='$regex' required>
                 <label for='$name'>$title</label>
                 <div class='valid-feedback'>
                     Looks good!
@@ -16,6 +16,12 @@
             echo "<div class='form-floating mb-3'>
                 <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' value='$value'>
                 <label for='$name'>$title</label>
+                <div class='valid-feedback'>
+                    Looks good!
+                </div>
+                <div class='invalid-feedback'>
+                    Please enter a valid $title.
+                </div>
             </div>";
         }
     }

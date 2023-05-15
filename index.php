@@ -55,11 +55,11 @@
                       <div class="accordion-body">
                         <form action="#" method="get">
                             <?php 
-                                inputField("keyword", "text", "Keyword", false);
-                                inputField("minSalary", "text", "Min Salary", false);
-                                inputField("maxSalary", "text", "Max Salary", false);
-                                inputField("location", "text", "Location", false);
-                                inputField("type", "text", "Type", false);
+                                inputField("keyword", "text", "Keyword", "/^[a-z ,.'-]+$/i", false);
+                                inputField("minSalary", "text", "Min Salary", '\d+', false);
+                                inputField("maxSalary", "text", "Max Salary", '\d+', false);
+                                inputField("location", "text", "Location", "/^[a-z ,.'-]+$/i", false);
+                                inputField("type", "text", "Type", "/^[a-z ,.'-]+$/i", false);
                                 fancySelect("skills[]", "Skills", [], "skills")
                             ?>
                             <div class="mb-3">

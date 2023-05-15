@@ -35,9 +35,9 @@
                     <form id="signupForm" class="needs-validation p-3" novalidate action="#" method="post">
                         <?php 
                             require "Components/inputs.php";
-                            inputField("name", "text", "Name");
-                            inputField("email", "email", "Email Address");
-                            inputField("phone", "text", "Phone Number");
+                            inputField("name", "text", "Name", "/^[a-z ,.'-]+$/i");
+                            inputField("email", "email", "Email Address", "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/");
+                            inputField("phone", "text", "Phone Number", "^(\+92|0)?3[0-9]{2}[0-9]{7}$");
                         ?>
                         <div class="mb-3">
                             <label for="gender" class="form-label">Gender</label> <br>
@@ -54,8 +54,8 @@
                             </div>
                         </div>
                         <?php
-                            inputField("password", "password", "Password");
-                            inputField("confirmPassword", "password", "Confirm Password");
+                            inputField("password", "password", "Password", "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
+                            inputField("confirmPassword", "password", "Confirm Password", "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
                             checkBoxField("terms", "terms", "I agree to the terms and conditions", true, "Please agree to the terms and conditions");
                         ?>
                         <div class="mb-3">
