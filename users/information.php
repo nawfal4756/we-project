@@ -1,8 +1,28 @@
 <?php
     require "navbar.php";
-    require "verification.php";
-    if ($completeProfile) {
-        header("Location: /users/dashboard.php");
+    require "../common/connection.php";
+    if ($_SESSION['end'] < time()) {
+        session_unset();
+        session_destroy();
+        header("Location: /login.php");
+    }
+
+    if ($_SESSION['type'] != "users") {
+        header("Location: /login.php");
+    }
+
+    $id = $_SESSION['id'];
+    $sql = "SELECT completeProfile, blocked FROM user WHERE id = $id";
+    $completeProfile = false;
+    try {
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        if ($row['completeProfile'] != 0) {
+            header("Location: /users/dashboard.php");
+        }
+    }
+    catch (Exception $e) {
+        //
     }
 
     require "../Components/inputs.php";

@@ -84,6 +84,7 @@
                 url: "/api/jobs/getAll.php/?"+dataString,
                 type: "GET",
                 success: function(data) {
+                    console.log(data)
                     if (data.statusCode == 200) {
                         if (data.num == 0) {
                             $("#jobs").html("")
@@ -102,7 +103,7 @@
                                 <div class="card">
                                     <div class="row">
                                         <div class="col-sm-4 d-flex justify-content-center align-items-center">
-                                            <img src="/uploads/${job.logo}" alt="Company Logo">
+                                            <img src="/uploads/${job.logo}" alt="Company Logo" width="100" height="100">
                                         </div>
                                         <div class="col-sm-8">
                                             <div class="card-body">

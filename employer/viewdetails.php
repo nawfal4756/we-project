@@ -83,7 +83,10 @@
                     <div class="col-md-6"><label class="labels">Country</label><input type="text" disabled  class="form-control"  value="Pakistan"></div>
                     <div class="col-md-6"><label class="labels">State/Region</label><input type="text" disabled  class="form-control" value="Asia" ></div>
                 </div>
-                <div class="mt-5 text-center"><a href="dashboard.php" class="btn btn-primary profile-button" type="button"> Go Back </a></div>
+                <div class="row d-flex flex-row">
+                    <div class="col-sm-12 mt-5 text-center"><a href="<?php echo "/uploads/".$userDetails['cv']; ?>" target="_blank" class="btn btn-primary profile-button" type="button"> View CV </a></div>
+                    <div class="col-sm-12 mt-3 text-center"><a href="dashboard.php" class="btn btn-secondary profile-button" type="button"> Go Back </a></div>
+                </div>
             </div>
         </div>
         <div class="col-md-4">
