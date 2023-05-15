@@ -34,13 +34,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/view.php/?type=admin">Admins</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item">
+                    <a class="nav-link" href="/common/logout.php">Logout</a>
+                </li>
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId">
                         <a class="dropdown-item" href="/admin/myaccount.php">My Account</a>
                         <a class="dropdown-item" href="/common/logout.php">Logout</a>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
   </div>

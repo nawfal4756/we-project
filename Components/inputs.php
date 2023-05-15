@@ -1,5 +1,5 @@
 <?php 
-    function inputField($name, $type, $title, $regex = null, $required = true, $value = null) {
+    function inputField($name, $type, $title, $regex = '.*', $required = true, $value = null) {
         if ($required) {
             echo "<div class='form-floating mb-3'>
                 <input type='$type' class='form-control' name='$name' id='$name' placeholder='Hello' value='$value' pattern='$regex' required>

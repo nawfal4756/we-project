@@ -27,8 +27,8 @@
             <div class="col-sm-12 mb-3">
                 <h1 class="text-center" id="heading"></h1>
             </div>
-            <div class="col-sm-12 d-flex justify-content-end mb-3" id="addBtn">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#addAdminModal" class="btn btn-primary"><i class="bi bi-plus"></i> Add</button>
+            <div class="col-sm-12 d-flex justify-content-end mb-3">
+                <button type="button" id="addBtn" data-bs-toggle="modal" data-bs-target="#addAdminModal" class="btn btn-primary" style="display: none;"><i class="bi bi-plus"></i> Add</button>
             </div>
             <div class="col-sm-12">
                 <div class="table-responsive">

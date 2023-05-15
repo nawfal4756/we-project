@@ -31,8 +31,8 @@
                     <form id="loginForm" class="needs-validation p-3" novalidate action="#" method="post">
                         <?php 
                             include "../Components/inputs.php";
-                            inputField("email", "email", "Email Address");
-                            inputField("password", "password", "Password");
+                            inputField("email", "email", "Email Address", "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/");
+                            inputField("password", "password", "Password", "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
                             checkBoxField("rememberMe", "rememberMe", "Remember Me", false);
                         ?>
                         <div class="mb-3">
