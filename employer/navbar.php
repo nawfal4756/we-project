@@ -30,28 +30,8 @@
 
                 <!-- add team members -->
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownId">
-                        <?php 
-                            if (!isset($_SESSION['EmployerEmail'])) {
-                        ?>
-                            <a class="dropdown-item" href="/login.php">Login</a>
-                            <a class="dropdown-item" href="/signup.php">Sign Up</a>
-                        <?php 
-                            } 
-                            else {
-                        ?>
-                            <a class="dropdown-item" href="/users/dashboard.php">Dashboard</a>
-                            <a class="dropdown-item" href="/users/myaccount.php">My Account</a>
-                            <a class="dropdown-item" href="/common/logout.php">Logout</a>
-                        <?php 
-                            }
-                        ?>
-                    </div>
-                </li>
                 <li class="nav-item ml-auto ">
-                    <a class="nav-link float-right" href="logout.php"> Log Out </a>
+                    <a class="nav-link float-right" href="/common/logout.php"> Log Out </a>
                 </li>
             </ul>
         </div>

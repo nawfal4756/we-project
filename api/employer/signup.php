@@ -33,24 +33,20 @@
             // compnay  
             $sql = "INSERT INTO company( name, logo, location, blocked)
             VALUES ( '$cleanedCompanyName', '', '$cleanedCompanyLocation', '')";
-             
-            $sq= "SELECT * FROM company ORDER BY id DESC LIMIT 1;
-            ";
-            $res=mysqli_query($conn, $sq);
-            $r = mysqli_fetch_assoc($res);
 
-            $companyID= $r['id'] ;
+            
             
             // employer 
-            $emp = "INSERT INTO employer(name, email, phone, password, gender,  companyId)
-            VALUES('$nameCleaned', '$emailCleaned', '$phoneCleaned', '$passwordCleaned', '$genderCleaned',  $companyID)";
-   
+            
             try {
                 $result = $conn->query($sql);
+                $companyID= $conn->insert_id;
+                $emp = "INSERT INTO employer(name, email, phone, password, gender,  companyId) VALUES('$nameCleaned', '$emailCleaned', '$phoneCleaned', '$passwordCleaned', '$genderCleaned',  $companyID)";
                 $result2 = mysqli_query($conn , $emp);
                 
                 // also maintaining sessions when signup takes place 
                 $_SESSION['employerId'] = $row['id'];
+                $_SESSION['companyId'] = $companyID;
                 $_SESSION['start'] = time();
                 $_SESSION['type'] = "employer";
                 // echo json_encode(array("statusCode" => 200, "data" => "Successful"));

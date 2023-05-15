@@ -76,7 +76,7 @@
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            // console.log(data);
+                            console.log(errorThrown);
                             showAlert(errorThrown, "danger")
                         }
                     })

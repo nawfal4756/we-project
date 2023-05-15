@@ -30,7 +30,8 @@
     <?php
         include "userCard.php";
         include "../common/connection.php";
-        $sql = "select * from jobapplication;";
+        $companyId = $_SESSION['companyId'];
+        $sql = "select * from jobapplication WHERE companyId = '$companyId';";
         $r=mysqli_query($conn, $sql);
 
     ?>
@@ -41,7 +42,7 @@
         ?>
             <div class="col-md-4">
                 <?php
-                    cardOfUser ($conn , $row['userId'] , $row['comapnyId'] , $row['jobId']  );
+                    cardOfUser ($conn , $row['userId'] , $row['companyId'] , $row['jobId']  );
                 ?>
             </div>
         <?php 

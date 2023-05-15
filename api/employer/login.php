@@ -17,7 +17,7 @@
                 $rememberMe = false;
             }
     
-            $sql = "SELECT id FROM employer WHERE email = '$cleanedEmail' AND password = '$cleanedPassword'";
+            $sql = "SELECT id, companyId FROM employer WHERE email = '$cleanedEmail' AND password = '$cleanedPassword'";
             
             try {
                 $result = $conn->query($sql);
@@ -26,6 +26,7 @@
                     
                     // employer session logged in -> sessions
                     $_SESSION['employerId'] = $row['id'];
+                    $_SESSION['companyId'] = $row['companyId'];
                     $_SESSION['start'] = time();
                     $_SESSION['type'] = "employer";
 

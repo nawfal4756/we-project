@@ -1,6 +1,8 @@
 <?php 
     require "../../common/connection.php";
-
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     // header("Content-Type: application/json");
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
@@ -28,7 +30,6 @@
 
             try {
                 $result = $conn->query($sql);
-                $result2 = mysqli_query($conn , $emp);
                 
                 echo '<script>window.location.href="../employer/dashboard.php";</script>';
             }
