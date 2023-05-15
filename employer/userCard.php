@@ -27,7 +27,7 @@
     <p class="card-text"> Job Requirements : <?php echo $row['requirements']; ?></p>
     <p class="card-text"><b>Salary :  <?php echo $row['minSalary']; ?> -  <?php echo $row['maxSalary']; ?></b></p>
     <a href="viewdetails.php?userId=<?php echo $userId; ?>" class="btn btn-primary"> View CV </a>
-    <button href="acceptUser.php?userId=<?php echo $userId; ?>" id="accept" class="btn btn-primary"> Accept </button>
+    <a href="acceptUser.php?userId=<?php echo $userId; ?>&companyId=<?php echo $_SESSION['companyId']; ?>&jobId=<?php echo $jobId; ?>" id="accept" class="btn btn-primary"> Accept </a>
   </div>
 </div>
 

@@ -31,7 +31,7 @@
         include "userCard.php";
         include "../common/connection.php";
         $companyId = $_SESSION['companyId'];
-        $sql = "select * from jobapplication WHERE companyId = '$companyId';";
+        $sql = "select * from jobapplication WHERE companyId = '$companyId' AND status = 'In-Progress';";
         $r=mysqli_query($conn, $sql);
 
     ?>
